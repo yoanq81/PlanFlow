@@ -1,0 +1,44 @@
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { LocalStorageService } from './storage.service';
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthenticationService {
+  readonly #key = 'plan-flow-token';
+  readonly #storageService = inject(LocalStorageService);
+  readonly #httpClient = inject(HttpClient);
+
+  token = signal(this.#storageService.get(this.#key)?.value ?? '');
+  isAuthenticated = computed(() => this.token() && this.token().length > 0);
+
+  setToken(token: string) {
+    this.token.set(token);
+    this.#storageService.set(this.#key, { value: token });
+  }
+
+  resetToken() {
+    this.token.set('');
+    this.#storageService.remove(this.#key);
+  }
+
+  logout() {
+    return this.#httpClient
+      .delete(`/tokens/${this.token()}`)
+      .pipe(tap(() => this.resetToken()));
+    // TODO llamar a revocar el token
+    //     fetch('https://api.trello.com/1/tokens/{token}/?key=APIKey&token=APIToken', {
+    //   method: 'DELETE'
+    // })
+    //   .then(response => {
+    //     console.log(
+    //       `Response: ${response.status} ${response.statusText}`
+    //     );
+    //     return response.text();
+    //   })
+    //   .then(text => console.log(text))
+    //   .catch(err => console.error(err));
+  }
+}

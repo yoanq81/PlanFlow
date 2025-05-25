@@ -1,0 +1,57 @@
+import { inject, Injectable, signal } from '@angular/core';
+import { ViewSelected } from '../models/view-selected.type';
+import { HttpClient } from '@angular/common/http';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { Board, BoardAdapter } from '../models/board.type';
+import { LocalStorageService } from './storage.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BoardsService {
+  readonly #key = 'plan-flow-boards';
+  readonly #url = 'members/me/boards';
+  readonly #storageService = inject(LocalStorageService);
+  readonly #httpClient = inject(HttpClient);
+  readonly #adapter = inject(BoardAdapter);
+
+  #viewSelected = signal<ViewSelected>(
+    this.#storageService.get(this.#key)?.view ?? 'table'
+  );
+
+  boardsRes = rxResource({
+    loader: () =>
+      this.#httpClient.get(`${this.#url}`).pipe(
+        // Adapt each item in the raw data array'
+        map((result: any) => {
+          return result;
+        }),
+        map((data: any[]): Board[] =>
+          data.map((item) => this.#adapter.adapt(item))
+        )
+      ),
+  });
+
+  get viewSelected() {
+    return this.#viewSelected();
+  }
+
+  setViewSelected(value: ViewSelected) {
+    if (value !== this.#viewSelected()) {
+      const valueInStorage = this.#storageService.get(this.#key) ?? {
+        elements: 10,
+        view: 'table',
+      };
+      this.#viewSelected.set(value);
+      this.#storageService.set(this.#key, {
+        elements: valueInStorage.elements,
+        view: value,
+      });
+    }
+  }
+
+  refreshBoards() {
+    this.boardsRes.reload();
+  }
+}

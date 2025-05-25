@@ -1,0 +1,44 @@
+<div class="flex p-4 w-full justify-around">
+  <div class="flex gap-2 lg:gap-4 items-center">
+    <mat-button-toggle-group
+      [ngModel]="viewSelected()"
+      aria-label="Tipo de vista a mostrar"
+      hideSingleSelectionIndicator="true"
+      (change)="changeViewSelected($event.value)"
+    >
+      <mat-button-toggle [value]="'table'" matTooltip="Vista tabla"
+        ><mat-icon>table_view</mat-icon></mat-button-toggle
+      >
+      <mat-button-toggle [value]="'card'" matTooltip="Vista tarjetas"
+        ><mat-icon>cards</mat-icon></mat-button-toggle
+      >
+    </mat-button-toggle-group>
+
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Actualizar listado de tableros"
+      (click)="reloadBoards()"
+    >
+      <mat-icon>sync</mat-icon>
+    </button>
+
+    <button
+      class="ml-4"
+      mat-flat-button
+      type="button"
+      matTooltip="Adicionar nuevo tablero"
+    >
+      <mat-icon>add</mat-icon>
+      <span class="ml-2 mr-1">Adicionar</span>
+    </button>
+  </div>
+</div>
+
+<div class="p-4 w-full mb-12">
+  @if(viewSelected() == 'table') {
+  <app-pp-table-view />
+  } @else {
+  <app-pp-card-view />
+  }
+</div>
