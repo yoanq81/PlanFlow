@@ -3,7 +3,12 @@ import { ViewSelected } from '../models/view-selected.type';
 import { HttpClient } from '@angular/common/http';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { Board, BoardAdapter } from '../models/board.type';
+import {
+  Board,
+  BoardAdapter,
+  BoardFullAdapter,
+  ComplexBoard,
+} from '../models/board.type';
 import { LocalStorageService } from './storage.service';
 
 @Injectable({
@@ -16,6 +21,7 @@ export class BoardsService {
   readonly #storageService = inject(LocalStorageService);
   readonly #httpClient = inject(HttpClient);
   readonly #adapter = inject(BoardAdapter);
+  readonly #fullAdapter = inject(BoardFullAdapter);
 
   #viewSelected = signal<ViewSelected>(
     this.#storageService.get(this.#key)?.view ?? 'table'
@@ -67,11 +73,6 @@ export class BoardsService {
           this.#boardUrl
         }/${boardId}/?fields=name&lists=all&list_fields=all&cards=all&card_fields=all&card_attachments=true`
       )
-      .pipe(
-        map((data: any) => {
-          console.log('Board lists:', data);
-          return data;
-        })
-      );
+      .pipe(map((data: any): ComplexBoard => this.#fullAdapter.adapt(data)));
   }
 }

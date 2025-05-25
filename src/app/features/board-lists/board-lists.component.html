@@ -1,1 +1,97 @@
-<p>board-lists works!</p>
+@if (!boardListsRes.isLoading() && boardListsRes.value()) {
+<div class="flex p-4 w-full justify-around">
+  <h2>{{ boardListsRes.value().name }}</h2>
+  <div class="flex gap-2 lg:gap-4 items-center">
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Actualizar listas"
+      (click)="reloadBoardLists()"
+    >
+      <mat-icon>sync</mat-icon>
+    </button>
+
+    <button
+      class="ml-4"
+      mat-flat-button
+      type="button"
+      matTooltip="Adicionar nueva lista"
+      (click)="openDialog()"
+    >
+      <mat-icon>add</mat-icon>
+      <span class="ml-2 mr-1">Adicionar lista</span>
+    </button>
+  </div>
+</div>
+
+<div class="p-4 w-full mb-12 grid grid-cols-3 gap-4">
+  @for (item of boardListsRes.value().lists; track $index) {
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ item.name }} </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="grid grid-cols-1 gap-4">
+      @for (card of item.cards; track card.id) {
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ card.name }}</mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="grid grid-cols-2 gap-2 my-4">
+            <div class="col-span-2">{{ card.description }}</div>
+            <div class="col-span-2">
+              <a [href]="card.url" target="_blank">{{ card.url }}</a>
+            </div>
+            <div class="col-span-1 flex gap-4 items-center">
+              <span>Cerrado</span>
+              @if (card.closed) {
+              <mat-icon>check_box</mat-icon>
+              } @else {
+              <mat-icon>check_box_outline_blank</mat-icon>
+              }
+            </div>
+            <div class="col-span-1 flex gap-4 items-center">
+              <span>Fijado</span>
+              @if (card.pinned) {
+              <mat-icon>check_box</mat-icon>
+              } @else {
+              <mat-icon>check_box_outline_blank</mat-icon>
+              }
+            </div>
+
+            <div class="col-span-1 flex gap-4 items-center">
+              <span>Favorito</span>
+              @if (card.starred) {
+              <mat-icon>check_box</mat-icon>
+              } @else {
+              <mat-icon>check_box_outline_blank</mat-icon>
+              }
+            </div>
+          </div>
+        </mat-card-content>
+        <!-- <mat-card-actions>
+          <button
+            mat-icon-button
+            color="primary"
+            title="Mostrar detalles"
+            type="button"
+            [routerLink]="['/boards', boardListsRes.value().id, 'lists', item.id]"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-card-actions> -->
+      </mat-card>
+      }
+    </div>
+
+    <button mat-button type="button" matTooltip="Adicionar nueva tarjeta">
+      <mat-icon>add</mat-icon>
+      <span class="ml-2 mr-1">Adicionar una tarjeta</span>
+    </button>
+  </mat-expansion-panel>
+  }
+</div>
+}

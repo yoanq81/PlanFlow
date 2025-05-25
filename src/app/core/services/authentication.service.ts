@@ -28,17 +28,5 @@ export class AuthenticationService {
     return this.#httpClient
       .delete(`/tokens/${this.token()}`)
       .pipe(tap(() => this.resetToken()));
-    // TODO llamar a revocar el token
-    //     fetch('https://api.trello.com/1/tokens/{token}/?key=APIKey&token=APIToken', {
-    //   method: 'DELETE'
-    // })
-    //   .then(response => {
-    //     console.log(
-    //       `Response: ${response.status} ${response.statusText}`
-    //     );
-    //     return response.text();
-    //   })
-    //   .then(text => console.log(text))
-    //   .catch(err => console.error(err));
   }
 }
