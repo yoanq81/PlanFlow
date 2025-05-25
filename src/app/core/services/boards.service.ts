@@ -12,6 +12,7 @@ import { LocalStorageService } from './storage.service';
 export class BoardsService {
   readonly #key = 'plan-flow-boards';
   readonly #url = 'members/me/boards';
+  readonly #addUrl = 'boards';
   readonly #storageService = inject(LocalStorageService);
   readonly #httpClient = inject(HttpClient);
   readonly #adapter = inject(BoardAdapter);
@@ -53,5 +54,9 @@ export class BoardsService {
 
   refreshBoards() {
     this.boardsRes.reload();
+  }
+
+  addNewBoard(board: string) {
+    return this.#httpClient.post(`${this.#addUrl}/?name=${board}`, {});
   }
 }

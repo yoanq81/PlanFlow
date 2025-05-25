@@ -10,7 +10,7 @@ import { ThemeService } from './core/services/theme.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'ProductToDo';
+  title = 'Plan Flow';
   readonly #matIconRegistry = inject(MatIconRegistry);
   readonly #themeService = inject(ThemeService);
 

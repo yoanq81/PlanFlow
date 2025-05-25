@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ProductToDo": {
+    "PlanFlow": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ProductToDo:build:production"
+              "buildTarget": "PlanFlow:build:production"
             },
             "development": {
-              "buildTarget": "ProductToDo:build:development"
+              "buildTarget": "PlanFlow:build:development"
             }
           },
           "defaultConfiguration": "development"

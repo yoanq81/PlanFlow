@@ -10,6 +10,8 @@ import { BoardsService } from '../../core/services/boards.service';
 import { ViewSelected } from '../../core/models/view-selected.type';
 import { BoardTableViewComponent } from './components/table-view/table-view.component';
 import { BoardCardViewComponent } from './components/card-view/card-view.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddBoardDialogComponent } from './components/add-board-dialog/add-board-dialog.component';
 
 @Component({
   selector: 'app-boards',
@@ -28,6 +30,7 @@ import { BoardCardViewComponent } from './components/card-view/card-view.compone
 })
 export default class BoardsComponent {
   readonly #boardsService = inject(BoardsService);
+  readonly dialog = inject(MatDialog);
   viewSelected = signal<ViewSelected>(this.#boardsService.viewSelected);
 
   changeViewSelected(value: ViewSelected) {
@@ -37,5 +40,23 @@ export default class BoardsComponent {
 
   reloadBoards() {
     this.#boardsService.refreshBoards();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddBoardDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        this.#boardsService.addNewBoard(result).subscribe({
+          next: () => {
+            this.#boardsService.refreshBoards();
+          },
+          error: (err) => {
+            console.error('Error adding new board:', err);
+          },
+        });
+      }
+    });
   }
 }

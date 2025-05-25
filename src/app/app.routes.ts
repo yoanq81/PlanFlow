@@ -13,11 +13,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/boards/boards.component'),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'products',
-    loadComponent: () => import('./features/products/products.component'),
-    canActivate: [AuthGuard],
-  },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'login',

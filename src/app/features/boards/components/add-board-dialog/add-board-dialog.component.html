@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Adicionar un tablero</h2>
+<mat-dialog-content>
+  <p>Introduzca el nombre del tablero que desea crear</p>
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="name" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" type="button">Cancelar</button>
+  <button mat-button [mat-dialog-close]="name()" cdkFocusInitial type="button">
+    Aceptar
+  </button>
+</mat-dialog-actions>
