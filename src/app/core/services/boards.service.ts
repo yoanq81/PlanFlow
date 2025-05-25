@@ -12,7 +12,7 @@ import { LocalStorageService } from './storage.service';
 export class BoardsService {
   readonly #key = 'plan-flow-boards';
   readonly #url = 'members/me/boards';
-  readonly #addUrl = 'boards';
+  readonly #boardUrl = 'boards';
   readonly #storageService = inject(LocalStorageService);
   readonly #httpClient = inject(HttpClient);
   readonly #adapter = inject(BoardAdapter);
@@ -57,6 +57,21 @@ export class BoardsService {
   }
 
   addNewBoard(board: string) {
-    return this.#httpClient.post(`${this.#addUrl}/?name=${board}`, {});
+    return this.#httpClient.post(`${this.#boardUrl}/?name=${board}`, {});
+  }
+
+  getBoardList(boardId: string) {
+    return this.#httpClient
+      .get(
+        `${
+          this.#boardUrl
+        }/${boardId}/?fields=name&lists=all&list_fields=all&cards=all&card_fields=all&card_attachments=true`
+      )
+      .pipe(
+        map((data: any) => {
+          console.log('Board lists:', data);
+          return data;
+        })
+      );
   }
 }

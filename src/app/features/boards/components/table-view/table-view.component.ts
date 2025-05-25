@@ -8,11 +8,17 @@ import { map, shareReplay } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { Board } from '../../../../core/models/board.type';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pp-table-view',
-  imports: [MatTableModule, MatCardModule, MatIconModule, MatButtonModule],
+  imports: [
+    MatTableModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterLink,
+  ],
   templateUrl: './table-view.component.html',
 })
 export class BoardTableViewComponent {

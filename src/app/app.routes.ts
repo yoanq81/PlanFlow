@@ -13,6 +13,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/boards/boards.component'),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'boards/:boardId/lists',
+    loadComponent: () => import('./features/board-lists/board-lists.component'),
+    canActivate: [AuthGuard],
+  },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'login',

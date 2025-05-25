@@ -3,10 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { BoardsService } from '../../../../core/services/boards.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pp-card-view',
-  imports: [MatCardModule, MatIconModule, MatButtonModule],
+  imports: [MatCardModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './card-view.component.html',
 })
 export class BoardCardViewComponent {
