@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { Board } from '../../../../core/models/board.type';
-import { BoardDialogComponent } from '../pending-product-dialog/pending-product-dialog.component';
 
 @Component({
   selector: 'app-pp-table-view',
@@ -61,14 +60,4 @@ export class BoardTableViewComponent {
   dataSource = computed(() =>
     this.boards.hasValue() ? this.boards.value()! : []
   );
-
-  openDialog(element: Board): void {
-    const dialogRef = this.dialog.open(BoardDialogComponent, {
-      data: element,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
-  }
 }

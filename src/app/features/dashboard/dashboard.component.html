@@ -8,7 +8,7 @@
       <mat-list>
         @for (item of dataSourceBoards(); track item.id) {
         <mat-list-item>
-          <span matListItemTitle>{{ item.title }}</span>
+          <span matListItemTitle>{{ item.name }}</span>
           <span matListItemLine>{{ item.description }}</span>
         </mat-list-item>
         }
