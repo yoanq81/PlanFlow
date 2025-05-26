@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-pending-product-dialog',
+  selector: 'app-add-board-dialog',
   imports: [
     MatFormFieldModule,
     MatInputModule,
