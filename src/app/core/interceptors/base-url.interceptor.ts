@@ -1,4 +1,4 @@
-import { HttpHandlerFn, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 
 export function baseUrlInterceptor(

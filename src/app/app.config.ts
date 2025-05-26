@@ -9,11 +9,14 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { baseUrlInterceptor } from './core/interceptors/base-url.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors([authInterceptor, baseUrlInterceptor])),
+    provideHttpClient(
+      withInterceptors([authInterceptor, baseUrlInterceptor, errorInterceptor])
+    ),
     provideRouter(
       routes,
       withInMemoryScrolling({
