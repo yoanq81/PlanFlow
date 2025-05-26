@@ -7,6 +7,7 @@
       type="button"
       matTooltip="Actualizar listas"
       (click)="reloadBoardLists()"
+      aria-label="Actualizar listas"
     >
       <mat-icon>sync</mat-icon>
     </button>
@@ -34,28 +35,18 @@
     <div class="grid grid-cols-1 gap-4">
       @for (card of item.cards; track card.id) {
       <mat-card appearance="outlined">
-        <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>{{ card.name }}</mat-card-title>
+        <mat-card-header class="truncate">
+          <mat-card-title-group class="truncate">
+            <mat-card-title class="truncate">
+              <div class="truncate">{{ card.name }}</div></mat-card-title
+            >
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
           <div class="grid grid-cols-2 gap-2 my-4">
-            <div class="col-span-2">{{ card.description }}</div>
-            <div class="col-span-2">
-              <a [href]="card.url" target="_blank">{{ card.url }}</a>
-            </div>
             <div class="col-span-1 flex gap-4 items-center">
               <span>Cerrado</span>
               @if (card.closed) {
-              <mat-icon>check_box</mat-icon>
-              } @else {
-              <mat-icon>check_box_outline_blank</mat-icon>
-              }
-            </div>
-            <div class="col-span-1 flex gap-4 items-center">
-              <span>Fijado</span>
-              @if (card.pinned) {
               <mat-icon>check_box</mat-icon>
               } @else {
               <mat-icon>check_box_outline_blank</mat-icon>

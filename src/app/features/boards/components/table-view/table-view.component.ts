@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-pp-table-view',
@@ -18,6 +19,7 @@ import { RouterLink } from '@angular/router';
     MatIconModule,
     MatButtonModule,
     RouterLink,
+    MatTooltipModule,
   ],
   templateUrl: './table-view.component.html',
 })

@@ -1,6 +1,11 @@
 <mat-toolbar class="header-toolbar">
   @if (showToggle()) {
-  <button mat-icon-button type="button" (click)="toggleSidenav.emit()">
+  <button
+    mat-icon-button
+    type="button"
+    (click)="toggleSidenav.emit()"
+    aria-label="Mostrar barra de navegación"
+  >
     <mat-icon>menu</mat-icon>
   </button>
   }
@@ -14,6 +19,7 @@
     type="button"
     (click)="toggleFullscreen()"
     matTooltip="Cambiar a pantalla completa"
+    aria-label="Cambiar a pantalla completa"
   >
     <mat-icon>fullscreen</mat-icon>
   </button>
@@ -24,6 +30,7 @@
     type="button"
     (click)="logout()"
     matTooltip="Cerrar sesión"
+    aria-label="Cerrar sesión"
   >
     <mat-icon>exit_to_app</mat-icon></button
   >}

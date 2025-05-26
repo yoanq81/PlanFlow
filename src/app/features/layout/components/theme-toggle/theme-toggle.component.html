@@ -5,6 +5,7 @@
     isDarkMode() ? 'Cambiar a vista diurna' : 'Cambiar a vista nocturna'
   "
   (click)="toggleTheme()"
+  aria-label="Cambiar tema de la aplicación"
 >
   <mat-icon>{{ isDarkMode() ? "wb_sunny" : "nights_stay" }}</mat-icon>
 </button>
