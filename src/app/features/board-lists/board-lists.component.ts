@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { AddBoardDialogComponent } from '../boards/components/add-board-dialog/add-board-dialog.component';
 import { MatCardModule } from '@angular/material/card';
+import { EditCardDialogComponent } from './components/edit-card-dialog/edit-card-dialog.component';
 
 @Component({
   selector: 'app-board-lists',
@@ -83,6 +84,29 @@ export default class BoardListsComponent {
           },
           error: (err) => {
             console.error('Error adding new card:', err);
+          },
+        });
+      }
+    });
+  }
+
+  openDialogForEditCard(idCard: string, name: string): void {
+    const dialogRef = this.dialog.open(EditCardDialogComponent, {
+      data: {
+        title: 'Editar tarjeta',
+        description: 'Cambie el nombre de la tarjeta',
+        name: name || '', // Initialize with existing name or empty string
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        this.#boardsService.editCard(result, idCard).subscribe({
+          next: () => {
+            this.reloadBoardLists();
+          },
+          error: (err) => {
+            console.error('Error editing card:', err);
           },
         });
       }

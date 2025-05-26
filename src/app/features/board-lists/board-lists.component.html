@@ -63,6 +63,18 @@
             </div>
           </div>
         </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-icon-button
+            title="Editar nombre de la tarjeta"
+            type="button"
+            matTooltip="Editar nombre de la tarjeta"
+            aria-label="Editar nombre de la tarjeta"
+            (click)="openDialogForEditCard(card.id, card.name)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card-actions>
       </mat-card>
       }
     </div>

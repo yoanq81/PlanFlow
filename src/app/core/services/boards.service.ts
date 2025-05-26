@@ -85,6 +85,10 @@ export class BoardsService {
     );
   }
 
+  editCard(name: string, idCard: string) {
+    return this.#httpClient.put(`${this.#cardUrl}/${idCard}?name=${name}`, {});
+  }
+
   addNewList(name: string, idBoard: string) {
     return this.#httpClient.post(
       `${this.#listUrl}/?name=${name}&idBoard=${idBoard}`,
