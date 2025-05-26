@@ -18,6 +18,8 @@ export class BoardsService {
   readonly #key = 'plan-flow-boards';
   readonly #url = 'members/me/boards';
   readonly #boardUrl = 'boards';
+  readonly #cardUrl = 'cards';
+  readonly #listUrl = 'lists';
   readonly #storageService = inject(LocalStorageService);
   readonly #httpClient = inject(HttpClient);
   readonly #adapter = inject(BoardAdapter);
@@ -74,5 +76,19 @@ export class BoardsService {
         }/${boardId}/?fields=name&lists=all&list_fields=all&cards=all&card_fields=all&card_attachments=true`
       )
       .pipe(map((data: any): ComplexBoard => this.#fullAdapter.adapt(data)));
+  }
+
+  addNewCard(name: string, idList: string) {
+    return this.#httpClient.post(
+      `${this.#cardUrl}/?name=${name}&idList=${idList}`,
+      {}
+    );
+  }
+
+  addNewList(name: string, idBoard: string) {
+    return this.#httpClient.post(
+      `${this.#listUrl}/?name=${name}&idBoard=${idBoard}`,
+      {}
+    );
   }
 }
