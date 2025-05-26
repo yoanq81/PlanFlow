@@ -12,10 +12,12 @@ export class AuthenticationService {
   readonly #httpClient = inject(HttpClient);
 
   token = signal(this.#storageService.get(this.#key)?.value ?? '');
-  isAuthenticated = computed(() => this.token() && this.token().length > 0);
+  isAuthenticated = computed(() => (this.token() ?? '').length > 0);
 
   setToken(token: string) {
     this.token.set(token);
+    console.log('Setting token:', this.token());
+    console.log('isAuthenticated:', this.isAuthenticated());
     this.#storageService.set(this.#key, { value: token });
   }
 
