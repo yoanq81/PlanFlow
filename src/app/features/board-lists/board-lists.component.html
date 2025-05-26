@@ -72,22 +72,16 @@
             </div>
           </div>
         </mat-card-content>
-        <!-- <mat-card-actions>
-          <button
-            mat-icon-button
-            color="primary"
-            title="Mostrar detalles"
-            type="button"
-            [routerLink]="['/boards', boardListsRes.value().id, 'lists', item.id]"
-          >
-            <mat-icon>visibility</mat-icon>
-          </button>
-        </mat-card-actions> -->
       </mat-card>
       }
     </div>
 
-    <button mat-button type="button" matTooltip="Adicionar nueva tarjeta">
+    <button
+      mat-button
+      type="button"
+      matTooltip="Adicionar nueva tarjeta"
+      (click)="openDialogForCard(item.id)"
+    >
       <mat-icon>add</mat-icon>
       <span class="ml-2 mr-1">Adicionar una tarjeta</span>
     </button>

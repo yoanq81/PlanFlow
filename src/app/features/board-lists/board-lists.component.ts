@@ -46,20 +46,45 @@ export default class BoardListsComponent {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddBoardDialogComponent);
+    const dialogRef = this.dialog.open(AddBoardDialogComponent, {
+      data: {
+        title: 'Adicionar lista',
+        description: 'Introduzca el nombre de la lista que desea crear',
+      },
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
       if (result !== undefined) {
-        console.log('New board data:', result);
-        // this.#boardsService.addNewBoard(result).subscribe({
-        //   next: () => {
-        //     this.#boardsService.refreshBoards();
-        //   },
-        //   error: (err) => {
-        //     console.error('Error adding new board:', err);
-        //   },
-        // });
+        this.#boardsService.addNewList(result, this.boardId()).subscribe({
+          next: () => {
+            this.reloadBoardLists();
+          },
+          error: (err) => {
+            console.error('Error adding new list:', err);
+          },
+        });
+      }
+    });
+  }
+
+  openDialogForCard(idList: string): void {
+    const dialogRef = this.dialog.open(AddBoardDialogComponent, {
+      data: {
+        title: 'Adicionar tarjeta',
+        description: 'Introduzca el nombre de la tarjeta que desea crear',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        this.#boardsService.addNewCard(result, idList).subscribe({
+          next: () => {
+            this.reloadBoardLists();
+          },
+          error: (err) => {
+            console.error('Error adding new card:', err);
+          },
+        });
       }
     });
   }

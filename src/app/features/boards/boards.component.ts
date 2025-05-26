@@ -43,10 +43,14 @@ export default class BoardsComponent {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddBoardDialogComponent);
+    const dialogRef = this.dialog.open(AddBoardDialogComponent, {
+      data: {
+        title: 'Aicionar tablero',
+        description: 'Introduzca el nombre del tablero que desea crear',
+      },
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
       if (result !== undefined) {
         this.#boardsService.addNewBoard(result).subscribe({
           next: () => {
