@@ -16,8 +16,6 @@ export class AuthenticationService {
 
   setToken(token: string) {
     this.token.set(token);
-    console.log('Setting token:', this.token());
-    console.log('isAuthenticated:', this.isAuthenticated());
     this.#storageService.set(this.#key, { value: token });
   }
 
