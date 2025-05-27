@@ -145,4 +145,35 @@ export default class BoardListsComponent {
       dialogRef.afterClosed().subscribe();
     });
   }
+
+  questionFlowChange() {
+    let question = 'Tomando en cuenta la siguiente información\n';
+    this.boardListsRes.value()?.lists.forEach((item) => {
+      if (item.cards.length > 0) {
+        let itemStr = `${item.name} con las tareas\n`;
+        item.cards.forEach(
+          (card) =>
+            (itemStr = itemStr + `${card.name} - ${card.description}` + '\n')
+        );
+        question = question + itemStr + '\n';
+      } else {
+        let itemStr = `${item.name} sin tareas\n`;
+        question = question + itemStr + '\n';
+      }
+    });
+    question =
+      question +
+      'Se desea identificar posibles cambios en el flujo de trabajo (por ejemplo: “Demasiadas tarjetas en Doing, considera limitar el WIP”).';
+    this.#openAIService.generateText(question).subscribe((data) => {
+      const response = data.choices[0].message.content.trim();
+      const dialogRef = this.dialog.open(MessageDialogComponent, {
+        data: {
+          title: 'Sugerencias',
+          description: response,
+        },
+      });
+
+      dialogRef.afterClosed().subscribe();
+    });
+  }
 }

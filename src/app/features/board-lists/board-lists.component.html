@@ -30,8 +30,19 @@
       matTooltip="Sugerir tareas prioritarias"
       (click)="questionPriorityTasks()"
     >
-      <mat-icon>question</mat-icon>
+      <mat-icon>question_mark</mat-icon>
       <span class="ml-2 mr-1">Tareas prioritarias</span>
+    </button>
+
+    <button
+      class="ml-4"
+      mat-flat-button
+      type="button"
+      matTooltip="Cambios en el flujo de trabajo"
+      (click)="questionFlowChange()"
+    >
+      <mat-icon>question_mark</mat-icon>
+      <span class="ml-2 mr-1">Flujo de trabajo</span>
     </button>
   </div>
 </div>
