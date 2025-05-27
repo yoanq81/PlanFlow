@@ -4,19 +4,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 interface OpenAIResponse {
-  choices: {
-    text: string;
-    index: number;
-    logprobs: any;
-    finish_reason: string;
-  }[];
+choices: {
+  index: number;
+  message: {
+    content: string;
+    role: string;
+  },
+  logprobs?: string;
+ }[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class OpenAIService {
-  #apiUrl = 'https://api.openai.com/v1/completions';
+  #apiUrl = 'https://api.openai.com/v1/chat/completions';
   #apiKey = environment.openAiApiKey;
   #http = inject(HttpClient);
 
@@ -26,11 +28,23 @@ export class OpenAIService {
       Authorization: `Bearer ${this.#apiKey}`,
     });
     const body = {
-      model: 'gpt-4',
-      prompt,
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: prompt },
+      ],
       max_tokens: 150,
       temperature: 0.7,
     };
+
+    // const body = { gpt-4
+    //      model: 'gpt-4o-mini',
+    //      messages: [
+    //        { role: 'system', content: 'You are a helpful assistant.' },
+    //        { role: 'user', content: prompt },
+    //      ],
+    //      max_tokens: 100,
+    //    };
     return this.#http.post<OpenAIResponse>(this.#apiUrl, body, { headers });
   }
 }

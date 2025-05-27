@@ -12,6 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddBoardDialogComponent } from '../boards/components/add-board-dialog/add-board-dialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { EditCardDialogComponent } from './components/edit-card-dialog/edit-card-dialog.component';
+import { ComplexBoard } from '../../core/models/board.type';
+import { OpenAIService } from '../../core/services/openai.service';
+import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-board-lists',
@@ -29,6 +32,7 @@ import { EditCardDialogComponent } from './components/edit-card-dialog/edit-card
 })
 export default class BoardListsComponent {
   readonly #boardsService = inject(BoardsService);
+  readonly #openAIService = inject(OpenAIService);
   readonly dialog = inject(MatDialog);
   readonly boardId = input.required<string>();
 
@@ -36,7 +40,7 @@ export default class BoardListsComponent {
     request: () => ({ id: this.boardId() }),
     loader: ({ request }) =>
       this.#boardsService.getBoardList(request.id).pipe(
-        map((result: any) => {
+        map((result: ComplexBoard) => {
           return result;
         })
       ),
@@ -110,6 +114,35 @@ export default class BoardListsComponent {
           },
         });
       }
+    });
+  }
+
+  questionPriorityTasks() {
+    let question = 'Tomando en cuenta la siguiente información\n';
+    this.boardListsRes.value()?.lists.forEach((item) => {
+      if (item.cards.length > 0) {
+        let itemStr = `${item.name} con las tareas\n`;
+        item.cards.forEach(
+          (card) =>
+            (itemStr = itemStr + `${card.name} - ${card.description}` + '\n')
+        );
+        question = question + itemStr + '\n';
+      } else {
+        let itemStr = `${item.name} sin tareas\n`;
+        question = question + itemStr + '\n';
+      }
+    });
+    question = question + 'Identificar las tareas prioritarias';
+    this.#openAIService.generateText(question).subscribe((data) => {
+      const response = data.choices[0].message.content.trim();
+      const dialogRef = this.dialog.open(MessageDialogComponent, {
+        data: {
+          title: 'Sugerencias',
+          description: response,
+        },
+      });
+
+      dialogRef.afterClosed().subscribe();
     });
   }
 }

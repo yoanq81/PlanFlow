@@ -5,6 +5,10 @@ export function baseUrlInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) {
+  if (req.url.includes('openai')) {
+    return next(req);
+  }
+
   // Inject the current `AuthService` and use it to get an authentication token:
   const baseUrl = environment.apiUrl;
 

@@ -7,6 +7,10 @@ export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) {
+  if (req.url.includes('openai')) {
+    return next(req);
+  }
+
   // Inject the current `AuthService` and use it to get an authentication token:
   const authToken = inject(AuthenticationService).token();
   const key = environment.apiKey;

@@ -1,6 +1,6 @@
 @if (!boardListsRes.isLoading() && boardListsRes.value()) {
 <div class="flex p-4 w-full justify-around">
-  <h2>{{ boardListsRes.value().name }}</h2>
+  <h2>{{ boardListsRes.value()?.name }}</h2>
   <div class="flex gap-2 lg:gap-4 items-center">
     <button
       mat-icon-button
@@ -22,11 +22,22 @@
       <mat-icon>add</mat-icon>
       <span class="ml-2 mr-1">Adicionar lista</span>
     </button>
+
+    <button
+      class="ml-4"
+      mat-flat-button
+      type="button"
+      matTooltip="Sugerir tareas prioritarias"
+      (click)="questionPriorityTasks()"
+    >
+      <mat-icon>question</mat-icon>
+      <span class="ml-2 mr-1">Tareas prioritarias</span>
+    </button>
   </div>
 </div>
 
 <div class="p-4 w-full mb-12 grid grid-cols-3 gap-4">
-  @for (item of boardListsRes.value().lists; track $index) {
+  @for (item of boardListsRes.value()?.lists; track $index) {
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title> {{ item.name }} </mat-panel-title>
@@ -47,15 +58,6 @@
             <div class="col-span-1 flex gap-4 items-center">
               <span>Cerrado</span>
               @if (card.closed) {
-              <mat-icon>check_box</mat-icon>
-              } @else {
-              <mat-icon>check_box_outline_blank</mat-icon>
-              }
-            </div>
-
-            <div class="col-span-1 flex gap-4 items-center">
-              <span>Favorito</span>
-              @if (card.starred) {
               <mat-icon>check_box</mat-icon>
               } @else {
               <mat-icon>check_box_outline_blank</mat-icon>
