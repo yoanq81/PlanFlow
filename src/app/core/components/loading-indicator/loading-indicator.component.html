@@ -1,1 +1,5 @@
-<p>loading-indicator works!</p>
+@if(loading$ | async) {
+<div class="fixed h-full w-full flex justify-center items-center top-0 left-0 z-2000 opacity-32">
+  <mat-spinner />
+</div>
+}

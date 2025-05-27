@@ -1,7 +1,12 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, input, OnInit } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
-import { RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
+import {
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+} from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { tap } from 'rxjs';
 
 @Component({
@@ -11,8 +16,8 @@ import { tap } from 'rxjs';
 })
 export class LoadingIndicatorComponent implements OnInit {
   detectRouteTransitions = input(false);
-#loadingService = inject(LoadingService);
-#router = inject(Router);
+  #loadingService = inject(LoadingService);
+  #router = inject(Router);
   loading$ = this.#loadingService.loading$;
 
   ngOnInit() {

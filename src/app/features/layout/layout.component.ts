@@ -12,6 +12,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AuthenticationService } from '../../core/services/authentication.service';
+import { LoadingIndicatorComponent } from "../../core/components/loading-indicator/loading-indicator.component";
 
 @Component({
   selector: 'app-layout',
@@ -29,7 +30,8 @@ import { AuthenticationService } from '../../core/services/authentication.servic
     RouterLinkActive,
     FooterComponent,
     HeaderComponent,
-  ],
+    LoadingIndicatorComponent
+],
 })
 export class LayoutComponent {
   #breakpointObserver = inject(BreakpointObserver);
