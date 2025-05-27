@@ -1,7 +1,7 @@
 @if (!boardListsRes.isLoading() && boardListsRes.value()) {
-<div class="flex p-4 w-full justify-around">
+<div class="flex p-4 flex-col md:flex-row w-full justify-around">
   <h2>{{ boardListsRes.value()?.name }}</h2>
-  <div class="flex gap-2 lg:gap-4 items-center">
+  <div class="flex flex-row gap-2 lg:gap-4 items-center">
     <button
       mat-icon-button
       type="button"
@@ -13,41 +13,40 @@
     </button>
 
     <button
-      class="ml-4"
       mat-flat-button
       type="button"
       matTooltip="Adicionar nueva lista"
       (click)="openDialog()"
     >
-      <mat-icon>add</mat-icon>
+      <mat-icon class="hidden md:flex">add</mat-icon>
       <span class="ml-2 mr-1">Adicionar lista</span>
     </button>
 
     <button
-      class="ml-4"
       mat-flat-button
       type="button"
       matTooltip="Sugerir tareas prioritarias"
       (click)="questionPriorityTasks()"
     >
-      <mat-icon>question_mark</mat-icon>
+      <mat-icon class="hidden md:flex">question_mark</mat-icon>
       <span class="ml-2 mr-1">Tareas prioritarias</span>
     </button>
 
     <button
-      class="ml-4"
       mat-flat-button
       type="button"
       matTooltip="Cambios en el flujo de trabajo"
       (click)="questionFlowChange()"
     >
-      <mat-icon>question_mark</mat-icon>
-      <span class="ml-2 mr-1">Flujo de trabajo</span>
+      <mat-icon class="hidden md:flex">question_mark</mat-icon>
+      <span class="ml-2 mr-1">Flujo trabajo</span>
     </button>
   </div>
 </div>
 
-<div class="p-4 w-full mb-12 grid grid-cols-3 gap-4">
+<div
+  class="p-4 w-full mb-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+>
   @for (item of boardListsRes.value()?.lists; track $index) {
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
